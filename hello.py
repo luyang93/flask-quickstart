@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, url_for, request
+from flask import Flask, url_for, request, render_template ,Markup
 from markupsafe import escape
 
 app = Flask(__name__)
@@ -8,6 +8,12 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return 'index'
+
+
+@app.route('/hello/')
+@app.route('/hello/<name>')
+def hello(name=None):
+    return render_template('hello.html', name=name)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -29,7 +35,10 @@ with app.test_request_context():
     print(url_for('login', next='/'))
     print(url_for('profile', username='John Doe'))
     print(url_for('static', filename='style.css')
-)
+          )
 
 if __name__ == '__main__':
+    Markup('<strong>Hello %s!</strong>') % '<blink>hacker</blink>'
+    Markup.escape('<blink>hacker</blink>')
+    Markup('<em>Marked up</em> &raquo; HTML').striptags()
     app.run(host='0.0.0.0', port=5000)
