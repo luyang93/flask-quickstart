@@ -16,12 +16,24 @@ def hello(name=None):
     return render_template('hello.html', name=name)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['POST', 'GET'])
 def login():
+    error = None
+    # searchword = request.args.get('key', '')
+    # if request.method == 'POST':
+    #     if valid_login(request.form['username'],
+    #                    request.form['password']):
+    #         return log_the_user_in(request.form['username'])
+    #     else:
+    #         error = 'Invalid username/password'
     if request.method == 'POST':
-        return 'do_the_login()'
-    else:
-        return 'show_the_login_form()'
+        if 0:
+            error = 'True'
+        else:
+            error = 'False'
+    # the code below is executed if the request method
+    # was GET or the credentials were invalid
+    return render_template('login.html', error=error)
 
 
 @app.route('/user/<username>')
